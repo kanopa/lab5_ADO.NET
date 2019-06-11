@@ -117,6 +117,7 @@ namespace lab5_ADO.NET
                         Console.ReadKey();
                         break;
                     case "18":
+                        program.SomeOperations(connection, dataSet);
                         Console.ReadKey();
                         break;
                     case "19":
@@ -357,6 +358,30 @@ namespace lab5_ADO.NET
             temp3 = Console.ReadLine();
             string command = string.Format("update InfoChemicals set {0} = '{1}' where ManufacturingCompany = '{2}'", temp1, temp2, temp3);
             var sql = new NpgsqlCommand(command, connection);
+            sql.ExecuteNonQuery();
+        }
+        public void SomeOperations(NpgsqlConnection connection, DataSet dataSet)
+        {
+            string temp1, temp2;
+            Console.WriteLine("Столбец: ");
+            temp1 = Console.ReadLine();
+            Console.WriteLine("Значение столбца");
+            temp2 = Console.ReadLine();
+            string command = string.Format("select* from InfoChemicals where {0} = '{1}'", temp1, temp2);
+            var sql = new NpgsqlCommand(command, connection);
+            NpgsqlDataAdapter adapter = new NpgsqlDataAdapter(command, connection);
+            DataTable dataTable = new DataTable();
+            adapter.Fill(dataSet, "InfoChemicals");
+            dataTable = dataSet.Tables["InfoChemicals"];
+            Console.WriteLine("Таблица InfoChemicals");
+            Console.WriteLine(new string('-', 100));
+            foreach (DataRow dataRow in dataTable.Rows)
+            {
+                Console.WriteLine("{0}    \t{1}   \t{2}\t{3}\t{4}    \t{5} ", dataRow["NameChemicals"].ToString(),
+                    dataRow["TypeChemical"].ToString(), dataRow["opportunities"].ToString(), dataRow["ChemicalComposition"].ToString(),
+                    dataRow["ManufacturingCompany"].ToString(), dataRow["price"].ToString());
+            }
+            Console.WriteLine(new string('-', 100));
             sql.ExecuteNonQuery();
         }
     }
