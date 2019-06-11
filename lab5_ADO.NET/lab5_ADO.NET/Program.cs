@@ -408,7 +408,7 @@ create table InfoManufacturing
 insert into InfoManufacturing values(1,'Apple',100);
 insert into InfoManufacturing values(2,'Strawberry',100);
 insert into InfoManufacturing values(3,'Cherry',150);
-select* from InfoChemicals,InfoManufacturing;
+select* from InfoManufacturing;
 create table ContractChemicals
 (
 	NumberContract serial primary key not null,
@@ -422,11 +422,13 @@ select* from ContractChemicals;
 create table PurchaseChemicals
 (
 	NameChemicals varchar(50) not null,
-	NumberContract serial not null,
+	NumberContract serial primary key not null,
 	CountChemicals int not null,
 	FOREIGN KEY (NumberContract) REFERENCES ContractChemicals (NumberContract)
 );
+drop table PurchaseChemicals
 insert into PurchaseChemicals values('Amiak',1,100);
 insert into PurchaseChemicals values('Poison',2,100);
 insert into PurchaseChemicals values('Prednison',3,150);
-select* from ContractChemicals,PurchaseChemicals;*/
+insert into PurchaseChemicals values('Oxyge',4,200);
+select* from PurchaseChemicals;*/
